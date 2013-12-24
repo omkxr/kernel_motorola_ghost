@@ -54,6 +54,7 @@
   Include Files
   ------------------------------------------------------------------------*/
 //#include <wlan_qct_driver.h>
+#include <linux/platform_device.h>
 #include <wlan_hdd_includes.h>
 #ifdef ANI_BUS_TYPE_SDIO
 #include <wlan_sal_misc.h>
@@ -4202,13 +4203,25 @@ static int __init hdd_module_init ( void)
    return hdd_driver_init();
 }
 #else /* #ifdef MODULE */
+static int wcnss_ready_probe(struct platform_device *pdev)
+{
+   return hdd_driver_init();
+}
+
+static struct platform_driver wcnss_ready = {
+   .driver = {
+      .name = "wcnss_ready",
+      .owner = THIS_MODULE,
+   },
+   .probe = wcnss_ready_probe,
+};
+
 static int __init hdd_module_init ( void)
 {
-   /* Driver initialization is delayed to fwpath_changed_handler */
-   return 0;
+   /* Driver initialization is delayed to fwpath_changed_handler or wcnss_ready */
+   return platform_driver_register(&wcnss_ready);
 }
 #endif /* #ifdef MODULE */
-
 
 /**---------------------------------------------------------------------------
 

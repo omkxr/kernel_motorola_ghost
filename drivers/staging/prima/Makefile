@@ -539,6 +539,24 @@ CDEFINES += -DWLAN_OPEN_SOURCE
 
 KBUILD_CPPFLAGS += $(CDEFINES)
 
+# Objects required by the driver file
+OBJS := $(VOSS_OBJS) \
+                $(BAP_OBJS)  \
+                $(TL_OBJS)   \
+                $(SME_OBJS)  \
+                $(SYS_OBJS)  \
+                $(SAP_OBJS)  \
+                $(MAC_OBJS)  \
+                $(HAL_OBJS)  \
+                $(HDD_OBJS)  \
+                $(NLINK_OBJS)\
+                $(BTC_OBJS)  \
+                $(PTT_OBJS)  \
+                $(WDA_OBJS)  \
+                $(WDI_OBJS)  \
+                $(DXE_OBJS)  \
 
-$(MODNAME)-objs := $(OBJS)
-obj-$(CONFIG_PRIMA_WLAN) += $(MODNAME).o
+
+# Module information used by KBuild framework
+obj-$(CONFIG_PRIMA_WLAN)   := $(MODNAME).o
+$(MODNAME)-y += $(OBJS)
