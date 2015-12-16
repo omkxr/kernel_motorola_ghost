@@ -2672,7 +2672,7 @@ static int _ft_sysfs_store(const char *buf, size_t count, unsigned int *ptr)
  */
 struct adreno_device *_get_adreno_dev(struct device *dev)
 {
-	struct kgsl_device *device = kgsl_device_from_dev(dev);
+	struct kgsl_device *device = kgsl_device_from_devkgsl_device_from_dev(dev);
 	return device ? ADRENO_DEVICE(device) : NULL;
 }
 
